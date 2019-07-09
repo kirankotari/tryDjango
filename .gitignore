@@ -138,6 +138,8 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/django
 
-static_in_env
+# static_in_env
 Pipfile
 Pipfile.lock
+
+.idea/
