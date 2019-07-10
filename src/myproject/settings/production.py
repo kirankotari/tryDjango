@@ -10,10 +10,7 @@ INSTALLED_APPS += [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
-    'products',
     'pages',
-    'blog',
-    'courses',
 ]
 
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

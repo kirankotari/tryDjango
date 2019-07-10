@@ -3,17 +3,60 @@
 
 {% block jumbotron %}
 <div class="jumbotron">
-    <h1>This is an example</h1>
-    <p>Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+    <h2>Map, Process and Analyse Skills</h2>
+    <p>Get a handle on the skills in your organization. Assess, track and report on skill and interest levels of all people. Perform Training Needs Analysis. Quickly find skilled employees for a job, client or project.</p>
 </div>
 {% endblock %}
 
 
 {% block content %}
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Fast, easy, and secure</h2>
+            <p>We've built Skills Base from the ground up to suit today's conditions and business needs. Skills Base has been designed to be secure, elegant and intuitive so that it's easy for anyone to use.</p>
+            <!--<p><a class="btn btn-default" href="#" role="button">View details »</a></p>-->
+        </div>
+        <div class="col-md-4">
+            <h2>Simple and Powerful</h2>
+            <p>Using the Skills Profiler - Business Leaders, Managers, HR and Employees can easily pick, tick and rate skills to create skills profile</p>
+            <!--<p><a class="btn btn-default" href="#" role="button">View details »</a></p>-->
+        </div>
+        <div class="col-md-4">
+            {% if not request.user.is_authenticated %}
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                <div id="div_id_login" class="form-group"><label for="id_login" class="control-label  requiredField">
+                    Login<span class="asteriskField">*</span> </label>
+                    <div class="controls "><input type="text" name="login" placeholder="Username or e-mail" autofocus="autofocus" class="textinput textInput form-control" required="" id="id_login">
+                    </div>
+                </div>
+                <div id="div_id_password" class="form-group"><label for="id_password" class="control-label  requiredField">
+                    Password<span class="asteriskField">*</span> </label>
+                    <div class="controls "><input type="password" name="password" placeholder="Password" class="textinput textInput form-control" required="" id="id_password"></div>
+                </div>
+                <div class="form-group">
+                    <div id="div_id_remember" class="checkbox"><label for="id_remember" class=""> <input type="checkbox" name="remember" class="checkboxinput" id="id_remember">
+                        Remember Me
+                    </label></div>
+                </div>
 
-<h1>Hello world</h1>
+                <a class="btn btn-link button secondaryAction" href="{% url 'account_reset_password' %}">Forgot Password?</a>
+                <a class="btn btn-link button secondaryAction" href="{% url 'account_signup' %}">Signup</a>
+                <button class="btn btn-default primaryAction" type="submit">Sign In</button>
+            </form>
+            {% else %}
+            <a class="btn btn-link button secondaryAction" href="{% url 'account_signup' %}">Profile</a>
+            {{ request.user }}
+            {% endif %}
+        </div>
+    </div>
 
-{{ request.user }} {{ request.user.is_authenticated }}
+    <hr>
 
-<p>This is a template</p>
+    <footer>
+        <p>© 2016 Company, Inc.</p>
+    </footer>
+</div>
 {% endblock %}
