@@ -1,8 +1,40 @@
-<nav>
-    <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact us</li>
-        <li>Social</li>
+<ul class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-4 mr-0" href="#"><b>Employee Skill Management</b></a>
+    {% url 'home' as home %}
+    {% url 'about' as about %}
+    {% url 'content' as content %}
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+        <li {% if request.path ==  home %} class="nav-item text-nowrap active" {% else %} class="nav-item text-nowrap" {% endif %}>
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
     </ul>
+    <ul class="navbar-nav px-3">
+        <li {% if request.path ==  about %} class="nav-item text-nowrap active" {% else %} class="nav-item text-nowrap" {% endif %}>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav px-3">
+        <li {% if request.path ==  content %} class="nav-item text-nowrap active" {% else %} class="nav-item text-nowrap" {% endif %}>
+            <a class="nav-link" href="{% url 'content' %}">Contact</a>
+        </li>
+    </ul>
+    <!--<ul class="navbar-nav px-3">-->
+        <!--<li class="nav-item text-nowrap">-->
+            <!--<a class="nav-link" href="#">Account</a>-->
+        <!--</li>-->
+<!--</ul>-->
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account
+          </button>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Sign up</a>
+              <a class="dropdown-item" href="#">Log in</a>
+              <a class="dropdown-item" href="#">Log out</a>
+          </div>
+        </div>
+
 </nav>
+
+

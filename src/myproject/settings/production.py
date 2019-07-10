@@ -5,6 +5,11 @@ DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = [config('ALLOW_HOST_IP'), config('ALLOW_HOST_NAME')]
 
 INSTALLED_APPS += [
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'crispy_forms',
     'products',
     'pages',
     'blog',

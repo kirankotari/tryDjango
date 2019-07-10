@@ -9,9 +9,10 @@ urlpatterns = [
     path('courses/', include('courses.urls')),
     path('', home_view, name='home'),
     path('content/', content_view, name='content'),
-    path('about/', about_view, name='product-lookup'),
+    path('about/', about_view, name='about'),
     path('social/', social_view, name='social'),
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
 ]
 
 
