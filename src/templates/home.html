@@ -47,8 +47,10 @@
                 <button class="btn btn-default primaryAction" type="submit">Sign In</button>
             </form>
             {% else %}
+            Login as: {{ request.user }}<br>
+            Skills:
             <a class="btn btn-link button secondaryAction" href="{% url 'account_signup' %}">Profile</a>
-            {{ request.user }}
+
             {% endif %}
         </div>
     </div>

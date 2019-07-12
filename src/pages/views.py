@@ -21,7 +21,6 @@ def content_view(request, *args, **kwargs):
     cofirm_message = None
     form = contactForm(request.POST or None)
     if form.is_valid():
-        print(request.POST)
         message = '{} {}'.format(form.cleaned_data['name'], form.cleaned_data['comment'])
         send_mail(
             'Subject Sample Message',

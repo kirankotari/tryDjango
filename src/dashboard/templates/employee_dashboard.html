@@ -1,12 +1,91 @@
+{% load dashboard_extras %}
+<p>Employee Dashboard - Rate your expert skill levels</p>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ul, #myUL {
+  list-style-type: none;
+}
 
+#myUL {
+  margin: 0;
+  padding: 0;
+}
 
-{% extends 'base.html' %}
+.caret_custom {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
 
-{% block content %}
+.caret_custom::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
 
-<h1>Dashborad Page</h1>
+.caret_custom-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */'
+  transform: rotate(90deg);
+}
 
-{{ user.username }}
-{{ user.email }}
+.nested {
+  display: none;
+}
 
-{% endblock %}
+.active {
+  display: block;
+}
+</style>
+
+<form method="POST" action=".">{% csrf_token %}
+<ul id="myUL">
+    {% for portfolio, pvalue in treeView.items %}
+    <li><span class="caret_custom">{{ portfolio }}</span>
+        <ul class="nested">
+        {% for tower, tower_value in pvalue.items %}
+            <li><span class="caret_custom">{{ tower }}</span>
+            <ul class="nested">
+            {% for technology, tvalue in tower_value.items %}
+                <li><span class="caret_custom">{{ technology }}</span>
+                <ul class="nested">
+                {% for skill_name, rating in tvalue.items %}
+                    <li> {{ skill_name }}
+                    <div class="form-group col-xs-offset-2" style="white-space:nowrap;">
+                      <select class="form-control" name={{ skill_name|space_underscore }} id={{ skill_name|space_underscore }}>
+                        {% for each in n %}
+                          {% if each|index:1 == rating %}
+                            <option value={{each }} selected>{{ each }}</option>
+                          {% else %}
+                            <option value={{each }}>{{ each }}</option>
+                          {% endif %}
+                          {% endfor %}
+                      </select></div>
+                    </li>
+
+                {% endfor %}
+                </ul>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+</ul>
+
+    <input class="btn btn-default" type="submit" value="Update the Skills">
+</form>
+
+<script>
+var toggler = document.getElementsByClassName("caret_custom");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret_custom-down");
+  });
+}
+</script>

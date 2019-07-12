@@ -1,12 +1,24 @@
-
-
 {% extends 'base.html' %}
-
 {% block content %}
 
-<h1>Dashborad Page</h1>
+<h4>Dashborad</h4>
 
-{{ user.username }}
-{{ user.email }}
+<!--{{ user.username }}-->
+
+<!-- Manager Begin -->
+{% if user.employee.manager %}
+{% block manager %}
+{% include 'manager_dashboard.html' %}
+{% endblock %}
+<!-- Manager End -->
+
+{% else %}
+<!-- Employee Begin -->
+{% block employee %}
+{% include 'employee_dashboard.html' %}
+{% endblock %}
+<!-- Employee End -->
+{% endif %}
+
 
 {% endblock %}
