@@ -9,34 +9,32 @@ def dashboard(request, *args, **kwargs):
     template = 'dashboard.html'
     # print(request.user)
 
-    es = EmployeeSkills.objects.filter(employee=request.user)
-    treeView = OrderedDict()
-    rating_dict = {'0':'0 -> None', '1':'1 -> Basic', '2':'2 -> Intermediate', '3':'3 -> Full', '4':'4 -> Expert'}
-    for each_es in es:
-        if request.method == 'POST':
+    if request.method == "POST":
+        es = EmployeeSkills.objects.filter(employee=request.user)
+        for each_es in es:
             skill = Skills.objects.filter(skill_name=each_es.skill.skill_name)
-            rating = Rating.objects.filter(rate=request.POST.get(each_es.skill.skill_name.replace(' ', '_'))[0])
+            rating = Rating.objects.filter(rate=request.POST.get(each_es.skill.skill_name.replace(' ', '_')))
             EmployeeSkills.objects.filter(skill=skill[0]).update(rating=rating[0])
 
+    treeView = OrderedDict()
+    r = Rating.objects.all()
+    es = EmployeeSkills.objects.filter(employee=request.user)
+    for each_es in es:
         if each_es.skill.portfolio not in treeView:
-            treeView = {each_es.skill.portfolio: {each_es.skill.tower: {each_es.skill.technology: {each_es.skill.skill_name: each_es.rating.rate}}}}
+            treeView = {each_es.skill.portfolio: {each_es.skill.tower: {each_es.skill.technology: {each_es.skill.skill_name: each_es.rating}}}}
         elif each_es.skill.tower not in treeView[each_es.skill.portfolio]:
-            treeView[each_es.skill.portfolio][each_es.skill.tower] = {each_es.skill.technology: {each_es.skill.skill_name: each_es.rating.rate}}
+            treeView[each_es.skill.portfolio][each_es.skill.tower] = {each_es.skill.technology: {each_es.skill.skill_name: each_es.rating}}
         elif each_es.skill.technology not in treeView[each_es.skill.portfolio][each_es.skill.tower]:
-            if request.method == 'POST':
-                treeView[each_es.skill.portfolio][each_es.skill.tower][each_es.skill.technology] = {each_es.skill.skill_name: rating_dict[request.POST.get(each_es.skill.skill_name.replace(' ', '_'))[0]]}
-            else:
-                treeView[each_es.skill.portfolio][each_es.skill.tower][each_es.skill.technology] = {each_es.skill.skill_name: rating_dict[each_es.rating.rate]}
+            treeView[each_es.skill.portfolio][each_es.skill.tower][each_es.skill.technology] = {each_es.skill.skill_name: each_es.rating}
         else:
-            if request.method == 'POST':
-                treeView[each_es.skill.portfolio][each_es.skill.tower][each_es.skill.technology][each_es.skill.skill_name] = rating_dict[request.POST.get(each_es.skill.skill_name.replace(' ', '_'))[0]]
-            else:
-                treeView[each_es.skill.portfolio][each_es.skill.tower][each_es.skill.technology][each_es.skill.skill_name] = rating_dict[each_es.rating.rate]
+            treeView[each_es.skill.portfolio][each_es.skill.tower][each_es.skill.technology][each_es.skill.skill_name] = each_es.rating
     try:
-        print(treeView)
-        context = {'employee': es[0].employee, 'treeView': treeView, 'n': ['0 -> None', '1 -> Basic', '2 -> Intermediate', '3 -> Full', '4 -> Expert']}
+        context = {'employee': es[0].employee, 'treeView': treeView, 'n': r}
     except Exception:
         context = {}
+
+    from .import_skills import load_skills
+    load_skills()
     return render(request, template, context)
 
 

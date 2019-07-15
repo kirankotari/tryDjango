@@ -11,7 +11,7 @@ class Location(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    location = models.CharField(max_length=120)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
     manager = models.BooleanField(default=False)
 
     def __str__(self):

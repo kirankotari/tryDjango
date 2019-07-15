@@ -57,7 +57,7 @@ ul, #myUL {
                     <div class="form-group col-xs-offset-2" style="white-space:nowrap;">
                       <select class="form-control" name={{ skill_name|space_underscore }} id={{ skill_name|space_underscore }}>
                         {% for each in n %}
-                          {% if each|index:1 == rating %}
+                          {% if each == rating %}
                             <option value={{each }} selected>{{ each }}</option>
                           {% else %}
                             <option value={{each }}>{{ each }}</option>

@@ -25,7 +25,8 @@ class EmployeeSignupForm(SignupForm):
 
     def save(self, request):
         u = super(EmployeeSignupForm, self).save(request)
-        employee = Employee.objects.create(user=u, location=request.POST['location'])
+        l = Location.objects.filter(location=request.POST['location'])[0]
+        employee = Employee.objects.create(user=u, location=l)
         employee.save()
 
         skills = Skills.objects.all()
