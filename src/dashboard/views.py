@@ -14,7 +14,9 @@ def dashboard(request, *args, **kwargs):
         for each_es in es:
             skill = Skills.objects.filter(skill_name=each_es.skill.skill_name)
             rating = Rating.objects.filter(rate=request.POST.get(each_es.skill.skill_name.replace(' ', '_')))
-            EmployeeSkills.objects.filter(skill=skill[0]).update(rating=rating[0])
+            EmployeeSkills.objects.filter(skill=skill[0], employee=request.user).update(rating=rating[0])
+            print('I am in post: {}'.format(rating[0]))
+            print(EmployeeSkills.objects.filter(skill=skill[0], employee=request.user))
 
     treeView = OrderedDict()
     r = Rating.objects.all()
