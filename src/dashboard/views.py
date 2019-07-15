@@ -13,7 +13,7 @@ def dashboard(request, *args, **kwargs):
     if request.method == "POST":
         es = EmployeeSkills.objects.filter(employee=request.user)
         for each_es in es:
-            skill = Skills.objects.filter(skill_name=each_es.skill.skill_name)
+            skill = Skills.objects.filter(skill_name=each_es.skill.skill_name, portfolio=each_es.skill.portfolio)
             rating = Rating.objects.filter(rate=request.POST.get(each_es.skill.skill_name.replace(' ', '_')))
             EmployeeSkills.objects.filter(skill=skill[0], employee=request.user).update(rating=rating[0])
 
