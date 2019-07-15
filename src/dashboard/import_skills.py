@@ -11,13 +11,13 @@ def load_skills():
     df_header = list(df)
     print(df_header)
 
-    locations = set(df['Working Location'])
+    locations = sorted(set(df['Working Location']))
     print(locations)
     for each in locations:
         l = Location.objects.create(location=each)
         l.save()
 
-    rating = set(df['Level'])
+    rating = sorted(set(df['Level']))
     for each in rating:
         if each.lower() != 'pending':
             r = Rating(rate=each.split()[0], title=each.split()[1])

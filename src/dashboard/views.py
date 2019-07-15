@@ -8,13 +8,20 @@ from .models import EmployeeSkills, Rating, Skills
 def dashboard(request, *args, **kwargs):
     template = 'dashboard.html'
     # print(request.user)
+    get_skills = None
 
     if request.method == "POST":
         es = EmployeeSkills.objects.filter(employee=request.user)
         for each_es in es:
             skill = Skills.objects.filter(skill_name=each_es.skill.skill_name)
             rating = Rating.objects.filter(rate=request.POST.get(each_es.skill.skill_name.replace(' ', '_')))
-            EmployeeSkills.objects.filter(skill=skill[0]).update(rating=rating[0])
+            EmployeeSkills.objects.filter(skill=skill[0], employee=request.user).update(rating=rating[0])
+
+    if request.method == "GET":
+        rating = Rating.objects.filter(rate=0)
+        es = EmployeeSkills.objects.filter(employee=request.user, rating=rating)
+        get_skills = es
+        print(get_skills)
 
     treeView = OrderedDict()
     r = Rating.objects.all()
@@ -29,7 +36,7 @@ def dashboard(request, *args, **kwargs):
         else:
             treeView[each_es.skill.portfolio][each_es.skill.tower][each_es.skill.technology][each_es.skill.skill_name] = each_es.rating
     try:
-        context = {'employee': es[0].employee, 'treeView': treeView, 'n': r}
+        context = {'employee': es[0].employee, 'treeView': treeView, 'n': r, 'get_skills': None}
     except Exception:
         context = {}
 

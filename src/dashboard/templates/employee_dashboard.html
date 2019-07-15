@@ -41,6 +41,16 @@ ul, #myUL {
 }
 </style>
 
+{% if get_skills %}
+<table>
+    {% for each_row in get_skills %}
+        <tr>
+            <td>{{ each_row }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
 <form method="POST" action=".">{% csrf_token %}
 <ul id="myUL">
     {% for portfolio, pvalue in treeView.items %}
