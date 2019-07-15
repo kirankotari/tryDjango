@@ -33,8 +33,8 @@ def dashboard(request, *args, **kwargs):
     except Exception:
         context = {}
 
-    from .import_skills import load_skills
-    load_skills()
+    # from .import_skills import load_skills
+    # load_skills()
     return render(request, template, context)
 
 

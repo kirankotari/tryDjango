@@ -53,18 +53,32 @@ ul, #myUL {
                 <li><span class="caret_custom">{{ technology }}</span>
                 <ul class="nested">
                 {% for skill_name, rating in tvalue.items %}
-                    <li> {{ skill_name }}
-                    <div class="form-group col-xs-offset-2" style="white-space:nowrap;">
-                      <select class="form-control" name={{ skill_name|space_underscore }} id={{ skill_name|space_underscore }}>
-                        {% for each in n %}
-                          {% if each == rating %}
-                            <option value={{each }} selected>{{ each }}</option>
-                          {% else %}
-                            <option value={{each }}>{{ each }}</option>
-                          {% endif %}
-                          {% endfor %}
-                      </select></div>
-                    </li>
+                    <div class="row">
+                        <div class="col-md-3"><li> {{ skill_name }}</li></div>
+                        <div class="col-md-3 form-group">
+                          <select class="form-control" name={{ skill_name|space_underscore }} id={{ skill_name|space_underscore }}>
+                            {% for each in n %}
+                              {% if each == rating %}
+                                <option value={{each }} selected>{{ each }}</option>
+                              {% else %}
+                                <option value={{each }}>{{ each }}</option>
+                              {% endif %}
+                              {% endfor %}
+                          </select></div>
+                        <div class="col-md-6"></div>
+                    </div>
+                    <!--<li> {{ skill_name }}-->
+                    <!--<div class="form-group col-xs-offset-2" style="white-space:nowrap;">-->
+                      <!--<select class="form-control" name={{ skill_name|space_underscore }} id={{ skill_name|space_underscore }}>-->
+                        <!--{% for each in n %}-->
+                          <!--{% if each == rating %}-->
+                            <!--<option value={{each }} selected>{{ each }}</option>-->
+                          <!--{% else %}-->
+                            <!--<option value={{each }}>{{ each }}</option>-->
+                          <!--{% endif %}-->
+                          <!--{% endfor %}-->
+                      <!--</select></div>-->
+                    <!--</li>-->
 
                 {% endfor %}
                 </ul>
