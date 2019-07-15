@@ -21,7 +21,6 @@ def dashboard(request, *args, **kwargs):
         rating = Rating.objects.filter(rate=0)
         es = EmployeeSkills.objects.filter(employee=request.user, rating=rating)
         get_skills = es
-        print(get_skills)
 
     treeView = OrderedDict()
     r = Rating.objects.all()
